@@ -1,0 +1,13 @@
+{
+    "agent": "DQN-v0",
+    "env": "ExaCartPoleStatic-v0",
+    "workflow": "sync",
+    "n_episodes": 10,
+    "n_steps": 10,
+    "model": "MLP",
+    "output_dir": "./results_dir/",
+    "process_per_env": 1,
+    "log_level": [3, 3],
+    "log_frequency": 1,
+    "profile": "None"
+}

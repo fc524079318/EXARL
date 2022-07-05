@@ -1,0 +1,29 @@
+# This continuous integration is setting up both the CH simulation and image structure,
+# and making sure that the first few iterations of both RL training work for ExaRL.
+
+sudo: required
+
+dist: bionic
+
+language: python
+python:
+  - "3.7"
+
+# Handle git submodules
+git:
+  submodules: false
+
+before_install:
+  - source setup/install.sh
+  - pip install -e setup
+
+script:
+  - pip install -r setup/test-requirements.txt
+  - flake8 .
+  - pytest --cov-config=.coveragerc --cov=./ --cov-report=xml --cov-report=term
+  - export PYTHONPATH=`pwd`:$PYTHONPATH
+  - python exarl/driver
+  - curl -Os https://uploader.codecov.io/latest/linux/codecov
+  - chmod +x codecov
+  - CODECOV_TOKEN=58f6254a-1517-4f4b-9e87-1348390deaf7
+  - ./codecov -t ${CODECOV_TOKEN}
